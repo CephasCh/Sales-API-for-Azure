@@ -32,6 +32,7 @@ Before running the project, make sure you have:
 - An Azure Event Hub namespace with Kafka enabled.
 - A valid Event Hub connection string.
 - Postman, if you want to test the endpoints manually.
+- Postman Agent application
 
 ## Install Dependencies
 
