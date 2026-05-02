@@ -94,107 +94,7 @@ SASL_PASSWORD = "your-eventhub-connection-string"
 TOPIC_NAME = "your-eventhub-name"
 ```
 
-Important: do not commit real Azure keys or connection strings to GitHub. Use environment variables or a `.env` file for production or shared repositories.
 
-## Run The Local FastAPI Server
-
-Start the local API server with Uvicorn:
-
-```powershell
-uvicorn main:app --reload
-```
-
-If the server starts successfully, you should see output showing that Uvicorn is running on:
-
-```text
-http://127.0.0.1:8000
-```
-
-This local server must keep running while you use Postman Agent. Postman sends requests to this server, and the server performs the actual Azure streaming work.
-
-You can also open the FastAPI Swagger documentation in your browser:
-
-```text
-http://127.0.0.1:8000/docs
-```
-
-## API Endpoints
-
-### Home Endpoint
-
-```http
-GET http://127.0.0.1:8000/
-```
-
-Returns a welcome message.
-
-Example response:
-
-```json
-{
-  "message": "Welcome to the Azure Sales Data Generator API!"
-}
-```
-
-### Generate Sales Data
-
-```http
-GET http://127.0.0.1:8000/generate_sales_data?records=5
-```
-
-Generates random sales records without sending them to Azure.
-
-Example response:
-
-```json
-[
-  {
-    "id": "1730342455123",
-    "customer_name": "Alice",
-    "amount": 2450.75,
-    "location": "New York",
-    "timestamp": "2025-10-31 10:30:55"
-  }
-]
-```
-
-### Start Streaming Data To Azure
-
-Use this endpoint in Postman Agent to start automatic streaming:
-
-```http
-POST http://127.0.0.1:8000/start_stream
-```
-
-No request body is required.
-
-Example response:
-
-```json
-{
-  "message": "Automatic data streaming to Event Hub and Cosmos DB started."
-}
-```
-
-After this endpoint is called, the application starts generating one sales transaction every 2 seconds. Each transaction is inserted into Cosmos DB and sent to Azure Event Hub.
-
-### Stop Streaming Data
-
-Use this endpoint to stop the automatic streaming loop:
-
-```http
-POST http://127.0.0.1:8000/stop_stream
-```
-
-No request body is required.
-
-Example response:
-
-```json
-{
-  "message": "Automatic data streaming stopped."
-}
-```
 
 ## Running With Postman Agent
 
@@ -217,12 +117,15 @@ Example response:
    ```http
    GET http://127.0.0.1:8000/generate_sales_data?records=5
    ```
+<img width="1077" height="394" alt="image" src="https://github.com/user-attachments/assets/997eba55-4cf6-4ee5-aaab-385fce43119c" />
+
 
 5. To start streaming data into Azure, send this request through Postman Agent:
 
    ```http
    POST http://127.0.0.1:8000/start_stream
    ```
+<img width="1071" height="326" alt="image" src="https://github.com/user-attachments/assets/3dfedb8e-9086-4e53-8410-1062f3b35309" />
 
 6. Keep the FastAPI terminal open. Watch the logs to confirm that records are being inserted into Cosmos DB and delivered to Event Hub.
 
@@ -231,6 +134,7 @@ Example response:
    ```http
    POST http://127.0.0.1:8000/stop_stream
    ```
+<img width="1068" height="403" alt="image" src="https://github.com/user-attachments/assets/702c916e-7616-4d97-8036-148fab88990d" />
 
 ## How The Application Works
 
