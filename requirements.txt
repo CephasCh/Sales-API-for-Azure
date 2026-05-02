@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+faker
+pydantic
+azure-eventhub
+azure-cosmos
+asyncio
